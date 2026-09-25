@@ -1,0 +1,12 @@
+/* AIVENSI — type scale (site-level), builds on _ds tokens/typography.css */
+:root{
+  --t-display:clamp(2.8rem,6vw,6.4rem); --t-display-lh:0.94; --t-display-ls:-0.045em;
+  --t-h2:clamp(1.8rem,3.6vw,3.2rem);   --t-h2-lh:1;      --t-h2-ls:-0.035em;
+  --t-h3:clamp(1.3rem,2vw,1.7rem);     --t-h3-lh:1.05;   --t-h3-ls:-0.025em;
+  --t-serif:clamp(1.15rem,1.6vw,1.4rem); --t-serif-lh:1.15; --t-serif-ls:-0.01em;
+  --t-body-lg:clamp(1.125rem,1.3vw,1.25rem); --t-body-lg-lh:1.55; --t-measure-lg:44ch;
+  --t-body:1.0625rem; --t-body-lh:1.6; --t-measure:52ch;
+  --t-button:0.9375rem; --t-button-lh:1;
+  --t-eyebrow:0.75rem; --t-eyebrow-ls:0.1em;
+  --t-meta:0.6875rem;  --t-meta-ls:0.08em;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "aivensi-site",
+  "private": true,
+  "engines": { "node": ">=20.9" },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run build"
+  },
+  "dependencies": {
+    "next": "15.5.26",
+    "react": "^19.1.7",
+    "react-dom": "^19.1.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.26",
+    "typescript": "^5"
+  }
+}
