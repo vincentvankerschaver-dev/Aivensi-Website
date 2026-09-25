@@ -48,13 +48,13 @@ export function Question() {
     <>
       <p className="sr" aria-live="polite">{live}</p>
 
-      <section data-scroll-stage data-stage="ink" className="stage-section wrap" aria-labelledby="vraag">
-        <h1 id="vraag" className="t-display">
+      <section data-scroll-stage data-stage="ink" className="stage-section wrap q-hero" aria-labelledby="vraag" style={{ justifyItems: 'center', textAlign: 'center' }}>
+        <h1 id="vraag" className="t-display q-title">
           Wat moet digitaal <span style={{ color: hover ? 'var(--c-ember-400)' : 'inherit', transition: 'color 240ms' }}>{word}</span>?<span className="cursor" aria-hidden="true" />
         </h1>
         <p className="t-body-lg muted">Kies. AIVENSI bouwt het antwoord.</p>
-        <div role="group" aria-label="Kies wat digitaal beter moet werken" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+        <div role="group" aria-label="Kies wat digitaal beter moet werken" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, width: '100%' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12 }}>
             {CHOICES.map(k => (
               <button key={k} type="button" className="choice" aria-pressed={key === k} onClick={() => pick(k)}
                 onMouseEnter={() => setHover(k)} onMouseLeave={() => setHover(null)} onFocus={() => setHover(k)} onBlur={() => setHover(null)}>
@@ -62,7 +62,7 @@ export function Question() {
               </button>
             ))}
           </div>
-          <form onSubmit={e => { e.preventDefault(); if (own.trim()) pick('own', own.trim()); }} style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 520 }}>
+          <form onSubmit={e => { e.preventDefault(); if (own.trim()) pick('own', own.trim()); }} style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', maxWidth: 520, textAlign: 'left' }}>
             <label htmlFor="andere" className="t-mono muted">Andere vraag</label>
             <div className="field">
               <input id="andere" value={own} onChange={e => setOwn(e.target.value)} placeholder="Typ wat er beter moet…" autoComplete="off" />

@@ -19,8 +19,10 @@ export default function Contact() {
             <p className="t-mono accent" style={{ margin: '0 0 40px' }}>Start een gesprek</p>
             <div className="g2" style={{ gridTemplateColumns: 'minmax(0,5fr) minmax(0,7fr)', gap: 'clamp(40px,6vw,112px)' }}>
               <div style={{ display: 'grid', gap: 28 }}>
-                <h1 id="contact-title" className="t-h2">Plan een gesprek.</h1>
-                <p className="t-body-lg muted" style={{ margin: 0 }}>Dertig minuten, aan tafel of online. Antwoord binnen twee werkdagen.</p>
+                <h1 id="contact-title" className="t-h2">Eén gesprek.<br />Geen pitch.</h1>
+                <p className="t-serif" style={{ margin: 0 }}>Dertig minuten, aan tafel of online.</p>
+                <p className="t-meta muted" style={{ margin: 0 }}>Antwoord binnen twee werkdagen</p>
+                <p className="t-body-lg" style={{ margin: 0 }}>We bespreken wat er vandaag niet werkt, wat het moet opleveren en waaraan we dat meten. Daarna volgt een voorstel — of niet, als het niet past.</p>
                 <dl className="t-body" style={{ margin: 0, display: 'grid', gridTemplateColumns: '110px minmax(0,1fr)', gap: '14px 20px', paddingTop: 28, borderTop: '1px solid var(--c-ink-900)' }}>
                   <dt className="t-meta muted" style={{ paddingTop: 3 }}>Locatie</dt><dd style={{ margin: 0 }}>Waasmunster, Waasland</dd>
                   <dt className="t-meta muted" style={{ paddingTop: 3 }}>Werkgebied</dt><dd style={{ margin: 0 }}>Waasland, Vlaanderen en digitaal overal</dd>
@@ -32,7 +34,7 @@ export default function Contact() {
           </div>
         </section>
       </main>
-      <Footer cta="Of bekijk eerst het werk." />
+      <Footer />
     </>
   );
 }

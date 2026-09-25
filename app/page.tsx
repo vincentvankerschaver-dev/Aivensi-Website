@@ -61,7 +61,7 @@ export default function Home() {
             <div style={{ display: 'grid', gap: 24 }}>
               <p className="t-mono accent">03 — Wie</p>
               <Reveal as="h2" id="wie" className="t-h3">Ik ben Vincent. Ik bouw AIVENSI.</Reveal>
-              <p className="t-body-lg muted">Eén persoon. Strategie, design, code en AI in dezelfde handen. Dus niets valt tussen de stoelen.</p>
+              <p className="t-body-lg muted">Eén aanspreekpunt. Strategie, design, code en AI onder één regie, met freelance specialisten waar nodig. Dus niets valt tussen de stoelen.</p>
               <blockquote className="t-serif rule" style={{ margin: 0, paddingTop: 24 }}>“Technologie is pas waardevol als ze iets vooruit helpt.”</blockquote>
               <Link href="/over" className="link" style={{ justifySelf: 'start' }}>Meer over de aanpak <span aria-hidden="true">→</span></Link>
             </div>

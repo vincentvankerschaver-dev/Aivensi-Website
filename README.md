@@ -11,6 +11,7 @@ nextjs/
 ├── components/Reveal.tsx
 ├── components/Question.tsx   stage 1+2 (client)
 ├── components/Waasland.tsx   kaart (client, IO)
+├── components/Manifest.tsx   Over: regels lichten op via IO (client)
 ├── components/Nav.tsx        Nav + Footer
 ├── lib/content.ts            goedgekeurde copy
 └── public/                   ginkgo-tree.jpg, vincent.jpg
@@ -62,7 +63,7 @@ Handmatig: Chrome, Safari, Firefox; 320/375/390/768/1440 px; snel/langzaam/omhoo
 
 ## Openstaand (REMAINING)
 - Contact form backend: REMAINING — formulier valideert en opent een voorbereide mailto; er wordt geen verzending bevestigd.
-- Assets: EMSRO screenshots (case-hero, /werk, homepage), AIVENSI logo SVG.
+- Assets: EMSRO screenshots (case-hero, /werk, homepage), AIVENSI logo SVG — ✅ gekozen: beeldmerk "twee schakels" (public/aivensi-mark-light.svg / -dark.svg).
 - Insight-artikelen: alleen titels, geen detailroutes.
 
 ## Valkuilen

@@ -1,7 +1,37 @@
-node_modules
-.next
-out
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Next.js build output
+.next/
+out/
+build/
+
+# TypeScript
 *.tsbuildinfo
 next-env.d.ts
-.env*.local
+
+# env / secrets — .env.example mag wél mee
+.env
+.env.*
+!.env.example
+
+# logs & debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# deployment / tooling
+.vercel/
+.turbo/
+coverage/
+
+# OS / editor
 .DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.pem
