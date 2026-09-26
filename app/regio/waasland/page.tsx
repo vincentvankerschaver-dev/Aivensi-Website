@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { Waasland } from '@/components/Waasland';
-import { CASES, TOWNS } from '@/lib/content';
+import { CASES, SERVICES, TOWNS } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Waasland — digitale studio uit Waasmunster',
@@ -40,7 +40,8 @@ export default function Regio() {
                 </li>
               ))}
             </ul>
-            <p className="t-body muted" style={{ margin: 'clamp(32px,5vw,56px) 0 0', maxWidth: '52ch' }}>Een bedrijf uit de streek dat we bouwden: <Link href={`/werk/${gt.slug}`} className="link">{gt.name} in Waasmunster →</Link></p>
+            <p className="t-body muted" style={{ margin: 'clamp(32px,5vw,56px) 0 0', maxWidth: '52ch' }}>Voor bedrijven in de regio vooral: {(['webdesign-development', 'seo', 'ai-automatisering'] as const).map((s, i, a) => <span key={s}><Link href={`/diensten/${s}`} className="in-link">{SERVICES[s].name}</Link>{i < a.length - 1 ? ', ' : '.'}</span>)}</p>
+            <p className="t-body muted" style={{ margin: '16px 0 0', maxWidth: '52ch' }}>Een bedrijf uit de streek dat we bouwden: <Link href={`/werk/${gt.slug}`} className="link">{gt.name} in Waasmunster →</Link></p>
           </div>
         </section>
       </main>

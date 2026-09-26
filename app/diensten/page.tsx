@@ -35,7 +35,7 @@ export default function Diensten() {
               {SERVICE_SLUGS.map(slug => { const s = SERVICES[slug]; return (
                 <li key={slug}>
                   <Link href={`/diensten/${slug}`} className="svc-card">
-                    <span className="t-mono accent">{s.idx} · {s.chain}</span>
+                    <span className="t-mono accent">{s.chain}</span>
                     <span className="t-h3" style={{ fontSize: 'clamp(1.6rem,3vw,2.6rem)' }}>{s.name}</span>
                     <span className="t-serif muted" style={{ fontSize: 'clamp(1.1rem,1.6vw,1.35rem)', maxWidth: '34ch' }}>{s.lead}</span>
                     <span className="t-body muted" style={{ maxWidth: '56ch' }}>{s.intro}</span>

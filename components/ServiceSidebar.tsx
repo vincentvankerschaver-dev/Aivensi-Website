@@ -4,14 +4,13 @@ import { SERVICES, SERVICE_SLUGS } from '@/lib/content';
 /** Sticky zijbalk: alle diensten + donker CTA-blok. Server Component. */
 export function ServiceSidebar({ current, topic }: { current?: string; topic: string }) {
   return (
-    <aside className="side">
+    <aside className="side side-svc">
       <nav aria-label="Alle diensten">
         <p className="t-mono muted" style={{ margin: '0 0 12px' }}>Diensten</p>
         <ul style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: '1px solid var(--c-ink-900)' }}>
           {SERVICE_SLUGS.map(s => (
             <li key={s}>
               <Link href={`/diensten/${s}`} className="side-link" aria-current={s === current ? 'page' : undefined}>
-                <span className="t-meta accent" style={{ fontSize: 11 }}>{SERVICES[s].idx}</span>
                 <span>{SERVICES[s].name}</span>
                 <span className="side-arrow accent" aria-hidden="true">→</span>
               </Link>

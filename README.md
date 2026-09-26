@@ -9,8 +9,15 @@ nextjs/
 ├── app/tokens/*.css          kopie van de AIVENSI design-system tokens (bron: _ds/…/tokens)
 ├── components/ScrollStage.tsx
 ├── components/Reveal.tsx
-├── components/Question.tsx   stage 1+2 (client)
-├── components/Waasland.tsx   kaart (client, IO)
+├── components/HomeFlow.tsx   home v4: vraag → antwoord → wie → en daarna (Care) → slotzin (client)
+├── components/Footer.tsx     variant 'mark' (karaoke-kop + beeldmerk + ember-bol) | 'plain'
+├── components/Snelcheck.tsx  AI-check per dienst → sessionStorage → /contact
+├── components/ContactTabs.tsx  Kies een moment (Cal.com) / Stuur een bericht
+├── components/InsightsBrowser.tsx  filter · uitgelicht 21:9 · asymmetrisch duo
+├── app/api/snelcheck/route.ts  server-route naar Claude (begrensd, met fallback)
+├── lib/snelcheck.ts          vragen + fallback per dienst
+├── components/CareLayer.tsx  homepage "En daarna?" levenscyclus (client, IO)
+├── components/Waasland.tsx   kaart (client, IO) — niet meer op home
 ├── components/Manifest.tsx   Over: regels lichten op via IO (client)
 ├── components/Nav.tsx        Nav + Footer
 ├── lib/content.ts            goedgekeurde copy
@@ -25,6 +32,12 @@ Geen dependencies. 0 kB animation-library.
 3. Fonts via `next/font/google`; `tokens/typography.css` leest `--next-font-*`. Geen Google `@import` meer.
 4. JS-gate: `<html class="no-js">` + inline `classList.replace('no-js','js')` in `<head>`; `suppressHydrationWarning` op `<html>` omdat de class vóór hydration wijzigt.
 5. Routes: `/`, `/werk`, `/werk/[slug]`, `/diensten`, `/diensten/[slug]`, `/over`, `/contact`, `/insights`, `/regio/waasland`, `sitemap.xml`, `robots.txt`. Redirects (308) in `next.config.ts`: `/cases/*`→`/werk/*`, `/diensten/ai-automation`→`ai-automatisering`, `/diensten/strategie`→`digitale-strategie`, `/blog*`→`/insights`, `/start-je-project`→`/contact`, `/aanpak`→`/over`.
+
+## Omgevingsvariabelen
+- `ANTHROPIC_API_KEY` (server) — Snelle check. Zonder key: vaste fallback-tips per dienst, UI meldt dan niet "opgesteld met AI".
+- `ANTHROPIC_MODEL` (optioneel, default `claude-sonnet-4-5`).
+- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (optioneel) — gedeelde rate limit voor de AI-routes.
+- `NEXT_PUBLIC_BOOKING_URL` — Cal.com-embed op /contact. Zonder: voorkeursmoment (namiddag ma–vr) dat meegaat in het bericht; er wordt niets als geboekt bevestigd.
 
 ## Waarom dit performant is
 - **Geen scroll-listener.** Scroll-events vuren tot 120×/s en dwingen JS op de main thread. IntersectionObserver meldt alleen wanneer een sectie de middenband van de viewport binnen- of buitengaat (één drempel), asynchroon, buiten de scroll-pipeline.
@@ -64,7 +77,11 @@ Handmatig: Chrome, Safari, Firefox; 320/375/390/768/1440 px; snel/langzaam/omhoo
 ## Openstaand (REMAINING)
 - Contact form backend: REMAINING — formulier valideert en opent een voorbereide mailto; er wordt geen verzending bevestigd.
 - Assets: EMSRO screenshots (case-hero, /werk, homepage), AIVENSI logo SVG — ✅ gekozen: beeldmerk "twee schakels" (public/aivensi-mark-light.svg / -dark.svg).
-- Insight-artikelen: alleen titels, geen detailroutes.
+- Insight-artikelen: alleen titels, geen detailroutes (kaarten tonen "Binnenkort").
+- Beelden Inzichten (uitgelicht + duo) en werkplaats-foto's: `img: null` in `lib/content.ts` → kader "Beeld/Foto volgt". Foto's in `public/` zetten en `img` invullen.
+- Rate limit AI-routes (lib/guard.ts): zet `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` voor een gedeelde teller op Vercel; zonder valt hij terug op geheugen per instantie.
+- Meetpunten (lib/track.ts) staan klaar maar sturen niets door tot er een analytics-tool gekozen is.
+- Open: "Plan een gesprek" vs "Start een gesprek" hangt af van de Cal.com-link.
 
 ## Valkuilen
 - `overflow:hidden` alleen op `.reveal-line-mask` — nooit op de sectie (breekt `position:sticky`).

@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
+import { Karaoke } from '@/components/Karaoke';
 import { Row } from '@/components/SectionIntro';
-import { CASES, CASE_SLUGS, SITE } from '@/lib/content';
+import { CASES, CASE_SLUGS, SERVICES, SITE, servicesForCase } from '@/lib/content';
 
 type Params = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
@@ -30,22 +31,30 @@ export default async function CasePage({ params }: Params) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
         <section className="page-cream" aria-labelledby="case-title">
           <div className="wrap" style={{ paddingTop: 'clamp(64px,9vw,128px)', paddingBottom: 'clamp(32px,4vw,48px)', display: 'grid', gap: 24 }}>
-            <p className="t-mono muted" style={{ margin: 0 }}><Link href="/werk">Werk</Link> · Case {c.idx}</p>
+            <p className="t-mono muted" style={{ margin: 0 }}><Link href="/werk">Werk</Link> · Case</p>
             <h1 id="case-title" className="t-h2">{c.name}</h1>
             <p className="t-serif muted" style={{ margin: 0 }}>{c.tag}</p>
             <p className="t-meta muted" style={{ margin: 0 }}>{c.role}</p>
+            {servicesForCase(c.slug).length > 0 && (
+              <p className="t-body" style={{ margin: 0 }}>Gebouwd met: {servicesForCase(c.slug).map((s, i, a) => <span key={s}><Link href={`/diensten/${s}`} className="in-link">{SERVICES[s].name}</Link>{i < a.length - 1 ? ' · ' : ''}</span>)}</p>
+            )}
           </div>
           <div className="wrap" style={{ paddingBottom: 'clamp(56px,8vw,112px)' }}>
-            <div className="frame" style={{ aspectRatio: '21 / 9' }}>
-              {c.img ? <Image src={c.img} alt={c.alt} fill priority sizes="100vw" style={{ objectFit: 'cover', objectPosition: 'top left' }} />
-                : <span className="t-meta muted frame-empty">{c.name} — screenshot volgt</span>}
-            </div>
+            {c.img ? (
+              <div className="frame" style={{ aspectRatio: '21 / 9' }}>
+                <Image src={c.img} alt={c.alt} fill priority sizes="100vw" style={{ objectFit: 'cover', objectPosition: 'top left' }} />
+              </div>
+            ) : (
+              <ul className="t-meta" style={{ listStyle: 'none', margin: 0, padding: '20px 0 0', display: 'flex', flexWrap: 'wrap', gap: '8px 24px', borderTop: '1px solid var(--c-ink-900)' }}>
+                {c.modules.map(m => <li key={m}>{m}</li>)}
+              </ul>
+            )}
           </div>
         </section>
         <section className="page-cream" aria-label="Case-inhoud" style={{ borderTop: '1px solid var(--color-border)' }}>
           <div className="wrap" style={{ paddingTop: 'clamp(24px,3vw,40px)', paddingBottom: 'clamp(48px,6vw,88px)' }}>
             {sections.map(([label, text], i) => (
-              <Row key={label} label={`0${i + 1} — ${label}`} last={i === sections.length - 1}><p className="t-body-lg" style={{ margin: 0, maxWidth: '58ch' }}>{text}</p></Row>
+              <Row key={label} label={label} last={i === sections.length - 1}><p className="t-body-lg" style={{ margin: 0, maxWidth: '58ch' }}>{text}</p></Row>
             ))}
           </div>
         </section>
@@ -54,18 +63,18 @@ export default async function CasePage({ params }: Params) {
             <div>
               <p className="t-mono accent" style={{ margin: '0 0 32px' }}>Wat samenkomt</p>
               <ol className="t-meta" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                {c.modules.map((m, i) => <li key={m} className="rule" style={{ padding: '12px 0', display: 'flex', justifyContent: 'space-between', gap: 16 }}><span>{m}</span><span className="muted">0{i + 1}</span></li>)}
+                {c.modules.map(m => <li key={m} className="rule" style={{ padding: '14px 0' }}>{m}</li>)}
               </ol>
             </div>
             <div>
               <p className="t-mono accent" style={{ margin: '0 0 32px' }}>Inzichten</p>
-              {c.insights.map(t => <p key={t} className="t-serif rule" style={{ margin: 0, padding: '20px 0', fontSize: 'clamp(1.3rem,2.2vw,1.9rem)' }}>{t}</p>)}
+              {c.insights.map(t => <Karaoke key={t} text={t} tone="ink" className="t-serif rule" style={{ margin: 0, padding: '20px 0', fontSize: 'clamp(1.3rem,2.2vw,1.9rem)' }} />)}
             </div>
             {c.url && <p style={{ margin: 0 }}><a href={c.url} target="_blank" rel="noopener" className="link">Bezoek de website <span aria-hidden="true">↗</span></a></p>}
           </div>
         </section>
         <nav className="page-cream" aria-label="Case-navigatie">
-          <div className="wrap t-meta" style={{ paddingTop: 'clamp(32px,4vw,56px)', paddingBottom: 'clamp(32px,4vw,56px)', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 16 }}>
+          <div className="wrap t-meta" style={{ paddingTop: 'clamp(32px,4vw,56px)', paddingBottom: 'clamp(32px,4vw,56px)', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '8px 16px' }}>
             <Link href="/werk" className="muted" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>← Alle cases</Link>
             <Link href={`/werk/${other.slug}`} className="muted" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>Volgende: {other.name} →</Link>
           </div>

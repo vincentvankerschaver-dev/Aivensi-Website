@@ -3,22 +3,21 @@ export const STEP_DESC = ['We beginnen bij de vraag en het doel, niet bij de too
 
 export const SHORT: Record<string, string> = { 'webdesign-development': 'webdesign', 'ai-automatisering': 'AI en automatisering', 'e-commerce': 'e-commerce', 'seo': 'SEO', 'social-content': 'content', 'digitale-strategie': 'strategie', 'rebranding': 'rebranding' };
 
+// Slotvraag per dienst (footer-CTA)
+export const DIENST_CTA: Record<string, string> = { 'webdesign-development': 'Klaar voor een site die meegaat?', 'ai-automatisering': 'Welk handwerk mag eruit?', 'e-commerce': 'Klaar om slimmer te verkopen?', 'seo': 'Gevonden worden waar je klanten zoeken?', 'social-content': 'Zichtbaar zonder dat het je dagen kost?', 'digitale-strategie': 'Eerst kiezen, dan bouwen?', 'rebranding': 'Klaar voor een merk dat klopt?' };
+
 export const MEGA_LINE: Record<string, string> = { 'webdesign-development': 'Snel, toegankelijk, duurzaam.', 'ai-automatisering': 'AI en koppelingen die werken.', 'e-commerce': 'Verkopen binnen het systeem.', 'seo': 'Vindbaar voor mens en AI.', 'social-content': 'Content in een haalbaar ritme.', 'digitale-strategie': 'De keuze vóór de bouw.', 'rebranding': 'Identiteit die klopt.' };
 
 type QA = [string, string];
 export const FAQ: Record<string, QA[]> = {
   _: [
     ['Werk ik met één persoon of met een team?', 'Vincent is je vaste aanspreekpunt van begin tot oplevering. Waar een project meer handen of specifieke expertise vraagt, werken we met freelance specialisten uit een vast netwerk — zonder dat jij met meerdere partijen moet afstemmen.'],
-    ['Hoe verloopt een eerste gesprek?', 'Geen pitch. We bespreken wat er vandaag niet werkt, wat het moet opleveren en waaraan we dat meten. Daarna volgt een voorstel met scope, aanpak en planning.'],
     ['Wat kost dit?', 'Dat hangt af van scope en complexiteit; we werken niet met vaste pakketten. Na het eerste gesprek krijg je een concreet voorstel met een duidelijke prijs — geen verrassingen achteraf.'],
-    ['Hoe lang duurt een project?', 'Een website van beperkte omvang loopt doorgaans enkele weken; een webshop, applicatie of automatiseringstraject langer. In het voorstel staat een realistische planning per fase, en je ziet tussentijds resultaat.'],
-    ['Werken jullie ook buiten het Waasland?', 'Ja. We zitten in Waasmunster en komen graag langs in de regio, maar het werk zelf gebeurt digitaal. Voor bedrijven elders in Vlaanderen werken we even goed op afstand.'],
-    ['Wat gebeurt er na de oplevering?', 'Je krijgt overdracht en documentatie, zodat je niet van ons afhankelijk bent. Wil je onderhoud, doorontwikkeling of opvolging van resultaten, dan spreken we dat apart af.'],
-    ['Blijf ik eigenaar van wat gebouwd wordt?', 'Ja. Domein, hosting, code, content en accounts staan op jouw naam. We werken met open, gangbare technologie zodat een andere partij het later kan overnemen als dat ooit nodig is.'],
   ],
   'webdesign-development': [
     ['WordPress of Next.js?', 'Beide. WordPress/Elementor als je zelf veel content wil beheren binnen een bekend systeem; Next.js als je een applicatie, koppelingen of maatwerk-performance nodig hebt. We kiezen op basis van wat het project nodig heeft, niet op voorkeur.'],
     ['Kan ik de website zelf aanpassen?', 'Ja. We bouwen zo dat teksten, beelden en pagina\'s door jou beheerd kunnen worden, en we leggen bij oplevering uit hoe. Structurele wijzigingen doen we liever samen, zodat de samenhang blijft.'],
+    ['Wat gebeurt er met mijn huidige site en Google-posities?', 'We brengen vooraf in kaart welke pagina\'s bezoekers en posities opleveren, en zetten redirects op voor alles wat verhuist. Zo verlies je bij de overstap niet wat je al hebt opgebouwd.'],
     ['Wordt de site ook snel en toegankelijk?', 'Dat is geen optie maar de basis: laadtijd, mobiel gebruik en toegankelijkheid (WCAG AA) zitten in het ontwerp en de bouw, niet in een nabehandeling.'],
   ],
   'ai-automatisering': [
@@ -48,4 +47,13 @@ export const FAQ: Record<string, QA[]> = {
     ['Moet mijn website mee veranderen bij een rebranding?', 'Niet altijd volledig. Soms volstaat een visuele update; soms is het moment om structuur en inhoud mee te herzien. We bekijken wat de identiteit nodig heeft om overal te kloppen.'],
   ],
 };
-export const faqFor = (slug: string): QA[] => [...(FAQ[slug] ?? []), ...FAQ._];
+export const faqFor = (slug: string): QA[] => [...(FAQ[slug] ?? []), ...FAQ._].slice(0, 5); // max 5 per dienst
+
+// Algemene vragen die niet per dienst herhaald worden — op /contact.
+export const CONTACT_FAQ: QA[] = [
+    ['Hoe verloopt een eerste gesprek?', 'Geen pitch. We bespreken wat er vandaag niet werkt, wat het moet opleveren en waaraan we dat meten. Daarna volgt een voorstel met scope, aanpak en planning.'],
+    ['Hoe lang duurt een project?', 'Een website van beperkte omvang loopt doorgaans enkele weken; een webshop, applicatie of automatiseringstraject langer. In het voorstel staat een realistische planning per fase, en je ziet tussentijds resultaat.'],
+    ['Werken jullie ook buiten het Waasland?', 'Ja. We zitten in Waasmunster en komen graag langs in de regio, maar het werk zelf gebeurt digitaal. Voor bedrijven elders in Vlaanderen werken we even goed op afstand.'],
+    ['Wat gebeurt er na de oplevering?', 'Je krijgt overdracht en documentatie, zodat je niet van ons afhankelijk bent. Wil je onderhoud, doorontwikkeling of opvolging van resultaten, dan spreken we dat apart af.'],
+    ['Blijf ik eigenaar van wat gebouwd wordt?', 'Ja. Domein, hosting, code, content en accounts staan op jouw naam. We werken met open, gangbare technologie zodat een andere partij het later kan overnemen als dat ooit nodig is.'],
+];

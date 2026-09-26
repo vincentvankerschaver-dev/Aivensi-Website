@@ -10,9 +10,9 @@ export function CaseCard({ c, heading = 'h2' }: { c: Case; heading?: 'h2' | 'h3'
       <Link href={`/werk/${c.slug}`} aria-label={`Case ${c.name}`} className="frame" style={{ aspectRatio: '4 / 3' }}>
         {c.img
           ? <Image src={c.img} alt={c.alt} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'cover', objectPosition: 'top left' }} />
-          : <span className="t-meta muted frame-empty">{c.name} — screenshot volgt</span>}
+          : <span className="frame-empty case-type"><span className="t-serif" style={{ margin: 0 }}>{c.tag}</span><span className="t-meta muted">{c.modules.slice(0, 4).join(' · ')}</span></span>}
       </Link>
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'baseline' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '6px 16px', alignItems: 'baseline' }}>
         <H className="t-h4" style={{ margin: 0 }}>{c.name}</H>
         <span className="t-meta muted">{c.meta}</span>
       </div>

@@ -3,7 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
+import { Karaoke } from '@/components/Karaoke';
 import { SERVICES, SERVICE_SLUGS, SITE, TOWNS } from '@/lib/content';
+import { COMPANY, filled } from '@/lib/legal';
+
+const NAME = filled(COMPANY.founder) ? COMPANY.founder : 'Vincent';
 
 export const metadata: Metadata = {
   title: 'Over — Digitale studio in Waasmunster',
@@ -13,19 +17,20 @@ export const metadata: Metadata = {
 
 const SCHEMA = {
   '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Over AIVENSI', url: `${SITE}/over`,
-  mainEntity: { '@type': 'Person', name: 'Vincent', jobTitle: 'Oprichter',
+  mainEntity: { '@type': 'Person', name: NAME, jobTitle: 'Oprichter', url: `${SITE}/over`, ...(filled(COMPANY.linkedin) ? { sameAs: [COMPANY.linkedin] } : {}),
     worksFor: { '@type': 'ProfessionalService', name: 'AIVENSI', address: { '@type': 'PostalAddress', addressLocality: 'Waasmunster', addressRegion: 'Oost-Vlaanderen', addressCountry: 'BE' }, areaServed: ['Waasland', ...TOWNS.slice(1).map(t => t[0])] },
     knowsAbout: ['Webdesign', 'Webdevelopment', 'E-commerce', 'AI', 'Automatisering', 'SEO'] },
 };
 
 const FACTS: [string, React.ReactNode][] = [
-  ['Naam', 'Vincent'],
+  ['Naam', NAME],
   ['Rol', 'Oprichter en aanspreekpunt — strategie, design, development, AI'],
   ['Team', 'Vast netwerk van freelance specialisten, per project samengesteld'],
   ['Basis', 'Waasmunster, Oost-Vlaanderen'],
   ['Regio', 'Waasland — Sint-Niklaas, Lokeren, Beveren, Temse, Hamme — en online'],
   ['Ervaring', 'Ruim tien jaar in e-commerce, web, SEO, AI en automatisering'],
   ['Stack', 'WordPress/Elementor · Next.js · Supabase'],
+  ...(filled(COMPANY.linkedin) ? [['LinkedIn', <a key="li" href={COMPANY.linkedin} target="_blank" rel="noopener me" style={{ borderBottom: '1px solid currentColor' }}>Profiel ↗</a>] as [string, React.ReactNode]] : []),
   ['Contact', <Link key="c" href="/contact" style={{ borderBottom: '1px solid currentColor' }}>Plan een gesprek →</Link>],
 ];
 
@@ -48,9 +53,9 @@ export default function Over() {
           <div aria-hidden="true" className="over-hero-shade" />
           <div className="wrap" style={{ position: 'relative', width: '100%', paddingTop: 'clamp(96px,14vw,200px)', paddingBottom: 'clamp(48px,7vw,96px)', display: 'grid', gap: 28 }}>
             <p className="t-mono accent" style={{ margin: 0 }}>Over AIVENSI</p>
-            <h1 id="over-title" className="t-hero" style={{ fontSize: 'clamp(2.8rem,8vw,7.2rem)' }}>Wie er achter AIVENSI zit.</h1>
+            <Karaoke as="h1" id="over-title" tone="ink" className="t-hero" style={{ fontSize: 'clamp(2.8rem,8vw,7.2rem)' }} text="Wie er achter AIVENSI zit." />
             <div className="g2" style={{ alignItems: 'end', paddingTop: 12, marginTop: 12, borderTop: '1px solid rgba(250,248,244,0.18)' }}>
-              <p className="t-serif" style={{ margin: 0, color: 'var(--c-cream-100)', maxWidth: '26ch' }}>Digitale studio in Waasmunster, geleid door Vincent.</p>
+              <Karaoke tone="ink" delay={0.9} className="t-serif" style={{ margin: 0, color: 'var(--c-cream-100)', maxWidth: '26ch' }} text="Een digitale studio in Waasmunster, geleid door Vincent." />
               <div style={{ display: 'grid', gap: 24 }}>
                 <p className="t-body-lg" style={{ margin: 0, color: 'var(--c-sand-300)', maxWidth: '46ch' }}>Websites, webshops, AI-toepassingen en automatisering voor kmo&rsquo;s in het Waasland. Eén aanspreekpunt van strategie tot oplevering, met een vast netwerk van freelance specialisten waar het project dat vraagt.</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24 }}>
@@ -65,7 +70,7 @@ export default function Over() {
         <section className="page-cream" aria-labelledby="bio">
           <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,420px),1fr))', gap: 'clamp(40px,6vw,96px)', alignItems: 'start', paddingTop: 'clamp(64px,9vw,144px)', paddingBottom: 'clamp(64px,9vw,144px)' }}>
             <div style={{ display: 'grid', gap: 24 }}>
-              <p className="t-mono accent" style={{ margin: 0 }}>01 — Wie</p>
+              <p className="t-mono accent" style={{ margin: 0 }}>Wie</p>
               <h2 id="bio" className="t-h3" style={{ maxWidth: '16ch' }}>Eén aanspreekpunt, geen agency-structuur</h2>
               <div className="t-body-lg muted" style={{ display: 'grid', gap: 18, maxWidth: '50ch' }}>
                 <p style={{ margin: 0 }}>Ik heb ruim tien jaar gewerkt in e-commerce, web, SEO en later AI en automatisering. Wat ik telkens zag: bedrijven hebben genoeg tools, maar die staan los van elkaar. De website weet niet wat de webshop verkoopt; de AI-tool staat naast het proces dat ze zou moeten versnellen.</p>
@@ -89,7 +94,7 @@ export default function Over() {
           <div className="wrap" style={{ paddingTop: 'clamp(64px,9vw,144px)', paddingBottom: 'clamp(64px,9vw,144px)' }}>
             <div className="g2" style={{ alignItems: 'end', marginBottom: 'clamp(40px,6vw,72px)' }}>
               <div>
-                <p className="t-mono accent" style={{ margin: '0 0 32px' }}>02 — Wat ik doe</p>
+                <p className="t-mono accent" style={{ margin: '0 0 32px' }}>Wat ik doe</p>
                 <h2 id="doe" className="t-h3">Zeven diensten, één systeem</h2>
               </div>
               <p className="t-body-lg muted" style={{ margin: 0, maxWidth: '44ch' }}>Je kunt ze apart afnemen, maar ze zijn ontworpen om samen te werken: wat de strategie beslist, bouwt het development, en wat we bouwen levert de data voor de volgende stap.</p>
@@ -98,7 +103,6 @@ export default function Over() {
               {SERVICE_SLUGS.map(slug => (
                 <li key={slug}>
                   <Link href={`/diensten/${slug}`} className="svc-row" style={{ borderBottom: '1px solid var(--c-ink-700)' }}>
-                    <span className="t-meta accent">{SERVICES[slug].idx}</span>
                     <span style={{ fontWeight: 800, fontSize: 'clamp(1.25rem,1.9vw,1.6rem)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{SERVICES[slug].name}</span>
                     <span className="t-body muted svc-hide">{SERVICES[slug].lead}</span>
                     <span className="svc-hide" aria-hidden="true">→</span>
@@ -111,7 +115,7 @@ export default function Over() {
 
         <section className="page-cream" aria-labelledby="traject">
           <div className="wrap" style={{ paddingTop: 'clamp(64px,9vw,144px)', paddingBottom: 'clamp(64px,9vw,144px)' }}>
-            <p className="t-mono accent" style={{ margin: '0 0 32px' }}>03 — Traject</p>
+            <p className="t-mono accent" style={{ margin: '0 0 32px' }}>Traject</p>
             <h2 id="traject" className="t-h3" style={{ margin: '0 0 clamp(40px,6vw,72px)', maxWidth: '16ch' }}>Hoe AIVENSI is ontstaan</h2>
             <ol style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: '1px solid var(--c-ink-900)' }}>
               {TIMELINE.map(([when, title, body, now]) => (

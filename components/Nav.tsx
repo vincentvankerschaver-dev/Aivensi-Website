@@ -12,19 +12,33 @@ export function Nav() {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const [mega, setMega] = useState(false);
+  const [sub, setSub] = useState(false);
+  const sheet = useRef<HTMLDivElement>(null);
+  const btn = useRef<HTMLButtonElement>(null);
   const t = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const wrap = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { setOpen(false); setMega(false); }, [path]);
+  useEffect(() => { setOpen(false); setMega(false); setSub(false); }, [path]);
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); setMega(false); } };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(o => { if (o) btn.current?.focus(); return false; }); setMega(false); } };
     window.addEventListener('keydown', onKey);
     return () => { window.removeEventListener('keydown', onKey); clearTimeout(t.current); };
   }, []);
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    sheet.current?.querySelector<HTMLElement>('a,button')?.focus();
+    // Focus binnen het menu houden (Tab/Shift+Tab)
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !sheet.current) return;
+      const f = Array.from(sheet.current.querySelectorAll<HTMLElement>('a,button')).concat(btn.current ? [btn.current] : []);
+      const i = f.indexOf(document.activeElement as HTMLElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    };
+    const close = () => { if (matchMedia('(min-width: 1025px)').matches) setOpen(false); };
+    document.addEventListener('keydown', trap); window.addEventListener('resize', close);
+    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', trap); window.removeEventListener('resize', close); };
   }, [open]);
 
   const current = (h: string) => path === h || path.startsWith(h + '/');
@@ -39,9 +53,9 @@ export function Nav() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/aivensi-mark-light.svg" alt="" width={34} height={34} style={{ display: 'block', flex: 'none' }} />
           <span style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: 26, lineHeight: 1 }}>AIVENSI</span>
-          <span className="nav-desk t-meta" style={{ color: 'var(--c-sand-300)', alignSelf: 'flex-end', paddingBottom: 4, fontSize: 11 }}>Waasmunster · Waasland</span>
+          <span className="nav-loc t-meta" style={{ color: 'var(--c-sand-300)', alignSelf: 'flex-end', paddingBottom: 4, fontSize: 11, whiteSpace: 'nowrap' }}>Waasmunster · Waasland</span>
         </Link>
-        <div className="nav-desk" style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+        <div className="nav-desk">
           {ITEMS.map(([h, l]) => h === '/diensten' ? (
             <div key={h} ref={wrap} onMouseEnter={openMega} onMouseLeave={closeSoon}
               onBlur={() => setTimeout(() => { if (wrap.current && !wrap.current.contains(document.activeElement)) closeSoon(); }, 0)}
@@ -63,7 +77,6 @@ export function Nav() {
                         {SERVICE_SLUGS.map(s => (
                           <li key={s}>
                             <Link href={`/diensten/${s}`} className="mega-item" aria-current={path === `/diensten/${s}` ? 'page' : undefined}>
-                              <span className="t-meta" style={{ color: 'var(--c-ember-400)', fontSize: 11 }}>{SERVICES[s].idx}</span>
                               <span className="mega-name">{SERVICES[s].name}</span>
                               <span className="mega-arrow" aria-hidden="true">→</span>
                               <span className="mega-line">{MEGA_LINE[s]}</span>
@@ -90,24 +103,35 @@ export function Nav() {
           ) : (
             <Link key={h} href={h} aria-current={current(h) ? 'page' : undefined} className="nav-link" style={{ borderBottomColor: current(h) ? 'currentColor' : 'transparent' }}>{l}</Link>
           ))}
-          <Link href="/contact" aria-current={current('/contact') ? 'page' : undefined} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 44, fontSize: 15, fontWeight: 700, borderBottom: '1px solid var(--c-ember-500)' }}>Plan een gesprek <span aria-hidden="true">→</span></Link>
+          <Link href="/contact" aria-current={current('/contact') ? 'page' : undefined} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 44, fontSize: 15, fontWeight: 700, whiteSpace: 'nowrap', borderBottom: '1px solid var(--c-ember-500)' }}>Plan een gesprek <span aria-hidden="true">→</span></Link>
         </div>
-        <button type="button" className="nav-mob t-meta" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(o => !o)}>
-          <span>{open ? 'Sluiten' : 'Menu'}</span>
+        <button ref={btn} type="button" className="nav-mob" aria-label={open ? 'Menu sluiten' : 'Menu openen'} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(o => !o)}>
           <span aria-hidden="true" className="nav-burger" />
         </button>
       </nav>
       {open && (
-        <div id="mobile-menu" role="dialog" aria-label="Menu" className="nav-sheet">
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {ITEMS.map(([h, l], i) => (
-              <Link key={h} href={h} aria-current={current(h) ? 'page' : undefined} className="nav-sheet-item">
-                <span className="t-meta accent">0{i + 1}</span><span>{l}</span>
+        <div ref={sheet} id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="nav-sheet">
+          <div className="nav-sheet-list">
+            {ITEMS.map(([h, l]) => h === '/diensten' ? (
+              <div key={h}>
+                <div className="nav-sheet-row">
+                  <Link href={h} aria-current={path === h ? 'page' : undefined} className="nav-sheet-item" onClick={() => setOpen(false)}>{l}</Link>
+                  <button type="button" className="nav-exp" aria-expanded={sub} aria-controls="mob-diensten" aria-label={sub ? 'Diensten inklappen' : 'Diensten uitklappen'} onClick={() => setSub(s => !s)}>+</button>
+                </div>
+                {sub && (
+                  <ul id="mob-diensten" className="nav-sub">
+                    {SERVICE_SLUGS.map(s => <li key={s}><Link href={`/diensten/${s}`} onClick={() => setOpen(false)} aria-current={path === `/diensten/${s}` ? 'page' : undefined}>{SERVICES[s].name}</Link></li>)}
+                  </ul>
+                )}
+              </div>
+            ) : (
+              <Link key={h} href={h} aria-current={current(h) ? 'page' : undefined} className="nav-sheet-item" onClick={() => setOpen(false)}>
+                <span>{l}</span>
               </Link>
             ))}
           </div>
           <div style={{ display: 'grid', gap: 20, paddingTop: 32 }}>
-            <Link href="/contact" className="btn" style={{ justifyContent: 'center', minHeight: 56 }}>Plan een gesprek →</Link>
+            <Link href="/contact" onClick={() => setOpen(false)} className="btn" style={{ justifyContent: 'center', minHeight: 56 }}>Plan een gesprek <span aria-hidden="true">→</span></Link>
             <p className="t-meta muted" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 12, lineHeight: 1.8 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/aivensi-mark-light.svg" alt="" width={28} height={28} style={{ display: 'block' }} />Waasmunster · Waasland
