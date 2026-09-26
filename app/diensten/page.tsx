@@ -43,6 +43,14 @@ export default function Diensten() {
                   </Link>
                 </li>
               ); })}
+              <li>
+                <Link href="/website-care" className="svc-card">
+                  <span className="t-mono accent">Doorlopend · na de lancering</span>
+                  <span className="t-h3" style={{ fontSize: 'clamp(1.6rem,3vw,2.6rem)' }}>Website Care</span>
+                  <span className="t-body muted" style={{ maxWidth: '56ch' }}>Geen achtste dienst, maar de laag eronder: onderhoud, monitoring, beveiliging en support. Websites vanaf €59/mnd, webshops vanaf €249/mnd, excl. btw.</span>
+                  <span className="link" style={{ justifySelf: 'start' }}>Bekijk Website Care <span aria-hidden="true">→</span></span>
+                </Link>
+              </li>
             </ul>
           </div>
         </section>

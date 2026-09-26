@@ -121,6 +121,7 @@ export function Nav() {
                 {sub && (
                   <ul id="mob-diensten" className="nav-sub">
                     {SERVICE_SLUGS.map(s => <li key={s}><Link href={`/diensten/${s}`} onClick={() => setOpen(false)} aria-current={path === `/diensten/${s}` ? 'page' : undefined}>{SERVICES[s].name}</Link></li>)}
+                    <li><Link href="/website-care" onClick={() => setOpen(false)} aria-current={path === '/website-care' ? 'page' : undefined}>Website Care</Link></li>
                   </ul>
                 )}
               </div>
